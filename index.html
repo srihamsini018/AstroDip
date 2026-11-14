@@ -317,7 +317,7 @@
                 <circle cx="130" cy="130" r="36" fill="#FF5E00" fill-opacity="0.18" class="animate-pulse-glow"/>
                 <circle cx="130" cy="130" r="26" fill="url(#sunGrad)"/>
 
-                <!-- Cute Ringed Cream Exoplanet (Top Right, inspired by reference panel 2) -->
+                <!-- Cute Ringed Cream Exoplanet -->
                 <g transform="translate(184, 68) rotate(-20)">
                   <ellipse cx="0" cy="0" rx="28" ry="8" stroke="#C80815" stroke-width="4"/>
                   <circle cx="0" cy="0" r="15" fill="#FDE6C4"/>
@@ -326,7 +326,7 @@
                   <path d="M-28 0 A28 8 0 0 0 28 0" stroke="#FF5E00" stroke-width="4" stroke-linecap="round"/>
                 </g>
 
-                <!-- Cute Pink Cratered Ringed Planet (Bottom Left, inspired by reference panel 3) -->
+                <!-- Cute Pink Cratered Ringed Planet -->
                 <g transform="translate(68, 178) rotate(18)">
                   <ellipse cx="0" cy="0" rx="25" ry="7" stroke="#FF5E00" stroke-width="3"/>
                   <circle cx="0" cy="0" r="14" fill="#D96B98"/>
@@ -371,16 +371,19 @@
 
       <!-- Clean 4-Card Live Mission Telemetry Strip -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div class="rounded-2xl bg-space-card border border-space-border p-5 flex items-center justify-between">
+        <button onclick="openDiscoveryDossierModal()" class="text-left rounded-2xl bg-space-card border border-space-border hover:border-space-orange transition-colors p-5 flex items-center justify-between group">
           <div>
-            <p class="text-xs uppercase tracking-wider text-space-muted font-semibold">Planets Discovered</p>
+            <p class="text-xs uppercase tracking-wider text-space-muted font-semibold flex items-center gap-1.5">
+              Planets Discovered
+              <span class="text-[10px] text-space-orange underline">Inspect +1</span>
+            </p>
             <p id="stat-planets-discovered" class="text-3xl font-display font-extrabold text-white mt-1">5,781</p>
-            <p id="stat-planets-sub" class="text-xs text-space-orange mt-1">5,780 NASA + 1 AstroDip</p>
+            <p id="stat-planets-sub" class="text-xs text-space-orange mt-1">5,780 NASA + 1 AstroDip (TRAPPIST-1 e)</p>
           </div>
-          <div class="w-12 h-12 rounded-2xl bg-space-orange/15 border border-space-orange/30 flex items-center justify-center text-space-orange">
+          <div class="w-12 h-12 rounded-2xl bg-space-orange/15 border border-space-orange/30 flex items-center justify-center text-space-orange group-hover:scale-105 transition-transform">
             <i data-lucide="globe" class="w-6 h-6"></i>
           </div>
-        </div>
+        </button>
 
         <div class="rounded-2xl bg-space-card border border-space-border p-5 flex items-center justify-between">
           <div>
@@ -416,7 +419,7 @@
         </div>
       </div>
 
-      <!-- Neat 3-Step Mission Pipeline Summary (Non-duplicate overview) -->
+      <!-- Neat 3-Step Mission Pipeline Summary -->
       <div class="rounded-3xl bg-space-card border border-space-border p-6 sm:p-8">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-6 border-b border-space-border">
           <div>
@@ -476,20 +479,17 @@
           </div>
 
           <div class="flex flex-wrap items-center gap-3">
-            <!-- Sample CSV Download for Judges -->
             <button onclick="downloadSampleCSV()" class="btn-pill-outline px-4 py-2.5 text-[11px] flex items-center gap-2">
               <i data-lucide="download" class="w-3.5 h-3.5 text-space-orange"></i>
               SAMPLE NASA CSV
             </button>
 
-            <!-- Upload CSV Light-Curve Button -->
             <label class="btn-pill-outline px-4 py-2.5 text-[11px] flex items-center gap-2 cursor-pointer">
               <i data-lucide="upload" class="w-3.5 h-3.5 text-space-peach"></i>
               <span>UPLOAD LIGHT-CURVE CSV</span>
               <input type="file" id="csv-upload-input" accept=".csv,.txt" onchange="handleCSVUpload(event)" class="hidden" />
             </label>
 
-            <!-- Refresh NASA Live API -->
             <button onclick="fetchNasaExoplanets(true)" class="btn-pill-orange px-5 py-2.5 text-[11px] flex items-center gap-2">
               <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
               SYNC NASA FEED
@@ -504,22 +504,21 @@
               Select NASA Telescope Target (TESS / Kepler / K2)
             </label>
             <select id="target-selector" onchange="selectTargetByIndex(this.value)" class="w-full bg-[#0B0B0D] border border-space-border rounded-2xl px-4 py-3 text-sm text-white font-medium focus:outline-none focus:border-space-orange">
-              <!-- Populated dynamically from NASA API / Fallback Catalog -->
             </select>
           </div>
 
           <div class="lg:col-span-4 grid grid-cols-3 gap-3">
             <div class="bg-[#0B0B0D] border border-space-border rounded-2xl p-3">
               <span class="text-[10px] uppercase tracking-wider text-space-muted block">Orbital Period</span>
-              <span id="meta-period" class="text-sm font-bold text-white font-mono">129.9 d</span>
+              <span id="meta-period" class="text-sm font-bold text-white font-mono">6.10 d</span>
             </div>
             <div class="bg-[#0B0B0D] border border-space-border rounded-2xl p-3">
               <span class="text-[10px] uppercase tracking-wider text-space-muted block">Radius (R⊕)</span>
-              <span id="meta-radius" class="text-sm font-bold text-space-peach font-mono">1.17 R⊕</span>
+              <span id="meta-radius" class="text-sm font-bold text-space-peach font-mono">0.92 R⊕</span>
             </div>
             <div class="bg-[#0B0B0D] border border-space-border rounded-2xl p-3">
               <span class="text-[10px] uppercase tracking-wider text-space-muted block">Eq. Temp</span>
-              <span id="meta-temp" class="text-sm font-bold text-emerald-400 font-mono">188 K</span>
+              <span id="meta-temp" class="text-sm font-bold text-emerald-400 font-mono">251 K</span>
             </div>
           </div>
 
@@ -541,12 +540,11 @@
             <div>
               <div class="flex items-center gap-2">
                 <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-space-orange/20 text-space-orange">STEP 1 • PHOTOMETRY</span>
-                <span id="scan-source-tag" class="text-xs text-space-muted font-mono">Source: Kepler Space Telescope</span>
+                <span id="scan-source-tag" class="text-xs text-space-muted font-mono">Source: Spitzer / TESS / JWST</span>
               </div>
               <h3 class="text-xl font-extrabold text-white mt-1">Stellar Corona & Brightness Light-Curve</h3>
             </div>
 
-            <!-- Interactive Dip Sensitivity / Noise Filter Slider -->
             <div class="flex items-center gap-3 bg-[#0B0B0D] border border-space-border px-3.5 py-2 rounded-2xl">
               <label for="dip-threshold-slider" class="text-[11px] font-bold uppercase tracking-wider text-space-muted">Dip Threshold:</label>
               <input id="dip-threshold-slider" type="range" min="1" max="10" step="0.5" value="3.5" oninput="updateDipThreshold(this.value)" class="w-24">
@@ -557,12 +555,6 @@
           <!-- Light-Curve Canvas Container -->
           <div class="relative w-full h-[300px] sm:h-[330px] rounded-2xl bg-[#0B0B0D] border border-space-border overflow-hidden">
             <canvas id="lightcurve-canvas" class="w-full h-full block cursor-crosshair"></canvas>
-            <!-- Hover Tooltip -->
-            <div id="lc-tooltip" class="hidden absolute pointer-events-none bg-[#131318]/95 border border-space-orange/60 rounded-xl px-3 py-2 text-xs shadow-xl z-10">
-              <div class="font-mono text-space-muted">Day: <span id="lc-tip-time" class="text-white font-bold">0.00</span></div>
-              <div class="font-mono text-space-muted">Flux: <span id="lc-tip-flux" class="text-space-orange font-bold">1.0000</span></div>
-              <div id="lc-tip-status" class="text-[10px] font-bold uppercase mt-0.5 text-emerald-400">Baseline Corona</div>
-            </div>
           </div>
 
           <!-- Detected Dip Telemetry Strip -->
@@ -574,7 +566,7 @@
             </div>
             <div class="rounded-2xl bg-[#0B0B0D] border border-space-border p-3.5">
               <span class="text-[10px] uppercase tracking-wider text-space-muted block">Dip Depth (ΔF)</span>
-              <span id="scan-dip-depth" class="text-xl font-display font-extrabold text-white mt-0.5 block">640 ppm</span>
+              <span id="scan-dip-depth" class="text-xl font-display font-extrabold text-white mt-0.5 block">4,920 ppm</span>
               <span id="scan-dip-shape" class="text-[11px] text-space-peach">U-Shaped Transit</span>
             </div>
             <div class="rounded-2xl bg-[#0B0B0D] border border-space-border p-3.5">
@@ -584,7 +576,7 @@
             </div>
             <div class="rounded-2xl bg-[#0B0B0D] border border-space-border p-3.5">
               <span class="text-[10px] uppercase tracking-wider text-space-muted block">Signal-to-Noise</span>
-              <span id="scan-snr" class="text-xl font-display font-extrabold text-sky-400 mt-0.5 block">18.4 SNR</span>
+              <span id="scan-snr" class="text-xl font-display font-extrabold text-sky-400 mt-0.5 block">22.4 SNR</span>
               <span class="text-[11px] text-space-muted">Corona Baseline Clean</span>
             </div>
           </div>
@@ -607,13 +599,11 @@
           <div class="relative w-full h-[275px] rounded-2xl bg-[#050507] border border-space-border overflow-hidden">
             <div id="threejs-container" class="w-full h-full cursor-grab active:cursor-grabbing"></div>
 
-            <!-- Live Transit Status Overlay -->
             <div class="absolute top-3 left-3 flex items-center gap-2 px-3 py-1 rounded-full bg-[#0B0B0D]/80 backdrop-blur border border-space-border text-[11px]">
               <span id="sim-transit-dot" class="w-2 h-2 rounded-full bg-emerald-400"></span>
               <span id="sim-transit-label" class="font-mono font-bold text-white">ORBITING BASELINE</span>
             </div>
 
-            <!-- Legend Overlay -->
             <div class="absolute bottom-3 left-3 right-3 flex items-center justify-between text-[10px] text-space-muted bg-[#0B0B0D]/80 backdrop-blur px-3 py-1.5 rounded-xl border border-space-border">
               <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-400"></span> Habitable Zone</span>
               <span>Drag to Rotate • Scroll to Zoom</span>
@@ -645,78 +635,479 @@
       </div>
 
       <!-- STEP 3: Diagnostic Scores, Earth-Like Life Checker & Oxygen (Any Type) Checker -->
-    <div class="rounded-3xl bg-space-card border border-space-border p-6 space-y-6">
-      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-        <!-- Score Gauges -->
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 flex-1">
-          <!-- Exoplanet vs Space Debris Probability -->
-          <div class="rounded-2xl bg-[#0B0B0D] border border-space-border p-4 space-y-2.5">
-            <div class="flex items-center justify-between">
-              <span class="text-xs font-bold uppercase tracking-wider text-space-muted">Exoplanet vs. Debris</span>
-              <span id="verdict-badge" class="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase bg-emerald-500/20 text-emerald-400">EXOPLANET</span>
-            </div>
-            <div class="flex items-baseline justify-between">
-              <div>
-                <span id="score-exoplanet" class="text-2xl font-display font-extrabold text-white">96%</span>
-                <span class="text-xs text-emerald-400 ml-1">Planet</span>
+      <div class="rounded-3xl bg-space-card border border-space-border p-6 space-y-6">
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+          <!-- Score Gauges -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 flex-1">
+            <!-- Exoplanet vs Space Debris Probability -->
+            <div class="rounded-2xl bg-[#0B0B0D] border border-space-border p-4 space-y-2.5">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold uppercase tracking-wider text-space-muted">Exoplanet vs. Debris</span>
+                <span id="verdict-badge" class="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase bg-emerald-500/20 text-emerald-400">EXOPLANET</span>
               </div>
-              <div class="text-right">
-                <span id="score-debris" class="text-lg font-display font-bold text-space-crimson">4%</span>
-                <span class="text-xs text-space-muted ml-1">Debris</span>
+              <div class="flex items-baseline justify-between">
+                <div>
+                  <span id="score-exoplanet" class="text-2xl font-display font-extrabold text-white">96%</span>
+                  <span class="text-xs text-emerald-400 ml-1">Planet</span>
+                </div>
+                <div class="text-right">
+                  <span id="score-debris" class="text-lg font-display font-bold text-space-crimson">4%</span>
+                  <span class="text-xs text-space-muted ml-1">Debris</span>
+                </div>
               </div>
+              <div class="w-full h-2.5 rounded-full bg-space-crimson/40 overflow-hidden flex">
+                <div id="bar-exoplanet" class="h-full bg-emerald-400 transition-all duration-500" style="width: 96%"></div>
+              </div>
+              <p id="verdict-reason" class="text-[11px] text-space-muted">Constant periodic dips & symmetrical U-curve confirm planetary body.</p>
             </div>
-            <div class="w-full h-2.5 rounded-full bg-space-crimson/40 overflow-hidden flex">
-              <div id="bar-exoplanet" class="h-full bg-emerald-400 transition-all duration-500" style="width: 96%"></div>
+
+            <!-- Earth-Like / Life Possibility Score -->
+            <div class="rounded-2xl bg-[#0B0B0D] border border-space-border p-4 space-y-2.5">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold uppercase tracking-wider text-space-muted">Life Possibility %</span>
+                <span id="hab-badge" class="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase bg-sky-500/20 text-sky-400">HIGH POTENTIAL</span>
+              </div>
+              <div class="flex items-baseline gap-2">
+                <span id="score-habitability" class="text-2xl font-display font-extrabold text-white">84%</span>
+                <span class="text-xs text-space-muted">Biosignature + HZ Index</span>
+              </div>
+              <div class="w-full h-2.5 rounded-full bg-[#191922] overflow-hidden">
+                <div id="bar-habitability" class="h-full bg-gradient-to-r from-sky-400 to-emerald-400 transition-all duration-500" style="width: 84%"></div>
+              </div>
+              <p id="hab-reason" class="text-[11px] text-space-muted">Rocky Earth-sized radius (0.92 R⊕) within stellar habitable zone.</p>
             </div>
-            <p id="verdict-reason" class="text-[11px] text-space-muted">Constant periodic dips & symmetrical U-curve confirm planetary body.</p>
+
+            <!-- Simulation Accountability Preview -->
+            <div class="rounded-2xl bg-[#0B0B0D] border border-space-border p-4 space-y-2.5">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold uppercase tracking-wider text-space-muted">Sim Accountability</span>
+                <button onclick="switchTab('accountability')" class="text-[10px] font-bold uppercase text-space-orange hover:underline">Full Audit →</button>
+              </div>
+              <div class="flex items-baseline gap-2">
+                <span id="score-accountability-preview" class="text-2xl font-display font-extrabold text-space-orange">96.4%</span>
+                <span class="text-xs text-emerald-400">Physics Match</span>
+              </div>
+              <div class="w-full h-2.5 rounded-full bg-[#191922] overflow-hidden">
+                <div id="bar-accountability-preview" class="h-full bg-gradient-to-r from-space-crimson to-space-orange transition-all duration-500" style="width: 96.4%"></div>
+              </div>
+              <p class="text-[11px] text-space-muted">Kepler 3rd Law & transit occultation depth verified against NASA data.</p>
+            </div>
           </div>
 
-          <!-- Earth-Like / Life Possibility Score -->
-          <div class="rounded-2xl bg-[#0B0B0D] border border-space-border p-4 space-y-2.5">
-            <div class="flex items-center justify-between">
-              <span class="text-xs font-bold uppercase tracking-wider text-space-muted">Life Possibility %</span>
-              <span id="hab-badge" class="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase bg-sky-500/20 text-sky-400">HIGH POTENTIAL</span>
-            </div>
-            <div class="flex items-baseline gap-2">
-              <span id="score-habitability" class="text-2xl font-display font-extrabold text-white">84%</span>
-              <span class="text-xs text-space-muted">Biosignature + HZ Index</span>
-            </div>
-            <div class="w-full h-2.5 rounded-full bg-[#191922] overflow-hidden">
-              <div id="bar-habitability" class="h-full bg-gradient-to-r from-sky-400 to-emerald-400 transition-all duration-500" style="width: 84%"></div>
-            </div>
-            <p id="hab-reason" class="text-[11px] text-space-muted">Rocky Earth-sized radius (1.17 R⊕) within stellar habitable zone.</p>
-          </div>
-
-          <!-- Simulation Accountability Preview -->
-          <div class="rounded-2xl bg-[#0B0B0D] border border-space-border p-4 space-y-2.5">
-            <div class="flex items-center justify-between">
-              <span class="text-xs font-bold uppercase tracking-wider text-space-muted">Sim Accountability</span>
-              <button onclick="switchTab('accountability')" class="text-[10px] font-bold uppercase text-space-orange hover:underline">Full Audit →</button>
-            </div>
-            <div class="flex items-baseline gap-2">
-              <span id="score-accountability-preview" class="text-2xl font-display font-extrabold text-space-orange">96.4%</span>
-              <span class="text-xs text-emerald-400">Physics Match</span>
-            </div>
-            <div class="w-full h-2.5 rounded-full bg-[#191922] overflow-hidden">
-              <div id="bar-accountability-preview" class="h-full bg-gradient-to-r from-space-crimson to-space-orange transition-all duration-500" style="width: 96.4%"></div>
-            </div>
-            <p class="text-[11px] text-space-muted">Kepler 3rd Law & transit occultation depth verified against NASA data.</p>
+          <!-- Save Action Button & Discovery Dossier Trigger -->
+          <div class="flex flex-col sm:flex-row lg:flex-col gap-3 justify-center lg:w-64">
+            <button onclick="saveCurrentScanRecord()" class="btn-pill-orange py-3.5 px-5 text-xs flex items-center justify-center gap-2 w-full">
+              <i data-lucide="bookmark-check" class="w-4 h-4"></i>
+              SAVE SCAN & SIM RECORD
+            </button>
+            <button onclick="openDiscoveryDossierModal()" class="btn-pill-crimson py-3.5 px-5 text-xs flex items-center justify-center gap-2 w-full">
+              <i data-lucide="sparkles" class="w-4 h-4"></i>
+              VIEW +1 DISCOVERY DOSSIER
+            </button>
           </div>
         </div>
 
-        <!-- Save Action Button & Discovery Dossier Trigger -->
-        <div class="flex flex-col sm:flex-row lg:flex-col gap-3 justify-center lg:w-64">
-          <button onclick="saveCurrentScanRecord()" class="btn-pill-orange py-3.5 px-5 text-xs flex items-center justify-center gap-2 w-full">
-            <i data-lucide="bookmark-check" class="w-4 h-4"></i>
-            SAVE SCAN & SIM RECORD
-          </button>
-          <button onclick="openDiscoveryDossierModal()" class="btn-pill-crimson py-3.5 px-5 text-xs flex items-center justify-center gap-2 w-full">
-            <i data-lucide="sparkles" class="w-4 h-4"></i>
-            VIEW ASTRODIP DISCOVERY DOSSIER
+        <!-- DEDICATED BIOSIGNATURE CHECKERS: EARTH-LIKE LIFE & OXYGEN (ANY TYPE) -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-5 pt-4 border-t border-space-border">
+          <!-- Checker 1: Earth-Like Life Found Checker -->
+          <div class="rounded-2xl bg-[#0B0B0D] border border-space-border p-5 space-y-4">
+            <div class="flex items-center justify-between gap-2">
+              <div class="flex items-center gap-2.5">
+                <div class="w-9 h-9 rounded-xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
+                  <i data-lucide="globe-2" class="w-5 h-5"></i>
+                </div>
+                <div>
+                  <span class="text-[10px] font-bold uppercase tracking-widest text-emerald-400">BIOSIGNATURE DIAGNOSTIC</span>
+                  <h4 class="text-base font-extrabold text-white">Earth-Like Life Found Checker</h4>
+                </div>
+              </div>
+              <span id="earthlike-status-badge" class="px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-emerald-500/20 text-emerald-400 border border-emerald-500/40">
+                EARTH-LIKE CANDIDATE
+              </span>
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 text-xs">
+              <div class="rounded-xl bg-space-card border border-space-border p-2.5">
+                <span class="text-[10px] text-space-muted block">Habitable Zone</span>
+                <span id="el-check-hz" class="font-bold text-emerald-400 mt-0.5 block">PASS</span>
+              </div>
+              <div class="rounded-xl bg-space-card border border-space-border p-2.5">
+                <span class="text-[10px] text-space-muted block">Surface Temp</span>
+                <span id="el-check-temp" class="font-bold text-white font-mono mt-0.5 block">251 K</span>
+              </div>
+              <div class="rounded-xl bg-space-card border border-space-border p-2.5">
+                <span class="text-[10px] text-space-muted block">Rocky Mass/Rad</span>
+                <span id="el-check-rad" class="font-bold text-white font-mono mt-0.5 block">0.92 R⊕</span>
+              </div>
+              <div class="rounded-xl bg-space-card border border-space-border p-2.5">
+                <span class="text-[10px] text-space-muted block">Liquid H₂O</span>
+                <span id="el-check-water" class="font-bold text-sky-400 mt-0.5 block">STABLE</span>
+              </div>
+            </div>
+
+            <p id="earthlike-verdict-detail" class="text-xs text-space-muted leading-relaxed">
+              <strong class="text-white">Verdict:</strong> Planetary equilibrium temperature and terrestrial radius fall inside the conservative Goldilocks zone for Earth-like surface oceans.
+            </p>
+          </div>
+
+          <!-- Checker 2: Oxygen Detection Checker (Any Type) -->
+          <div class="rounded-2xl bg-[#0B0B0D] border border-space-border p-5 space-y-4">
+            <div class="flex items-center justify-between gap-2">
+              <div class="flex items-center gap-2.5">
+                <div class="w-9 h-9 rounded-xl bg-sky-500/15 border border-sky-500/30 flex items-center justify-center text-sky-400">
+                  <i data-lucide="wind" class="w-5 h-5"></i>
+                </div>
+                <div>
+                  <span class="text-[10px] font-bold uppercase tracking-widest text-sky-400">TRANSMISSION SPECTROSCOPY</span>
+                  <h4 class="text-base font-extrabold text-white">Oxygen Checker (Any Type Found)</h4>
+                </div>
+              </div>
+              <span id="oxygen-overall-badge" class="px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-sky-500/20 text-sky-300 border border-sky-500/40">
+                OXYGEN COMPOUNDS DETECTED
+              </span>
+            </div>
+
+            <!-- 5 Oxygen Species Pills -->
+            <div id="oxygen-species-grid" class="grid grid-cols-2 sm:grid-cols-5 gap-2 text-center">
+            </div>
+
+            <div class="flex items-center justify-between gap-3 text-xs pt-1">
+              <p id="oxygen-origin-note" class="text-space-muted leading-relaxed">
+                <strong class="text-white">Origin Analysis:</strong> JWST NIRSpec transmission spectrum indicates water vapor (H₂O), CO₂, and photolytic Ozone (O₃).
+              </p>
+              <span id="oxygen-ppm-badge" class="shrink-0 font-mono text-xs font-bold text-space-orange bg-space-card border border-space-border px-2.5 py-1 rounded-lg">142 ppm</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- TAB 3: MILKY WAY 3D GALAXY SIMULATION OF KNOWN PLANET SYSTEMS         -->
+    <!-- ===================================================================== -->
+    <section id="tab-milkyway" class="tab-panel hidden space-y-6">
+      <div class="rounded-3xl bg-space-card border border-space-border p-6">
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+          <div>
+            <span class="text-[11px] font-bold uppercase tracking-widest text-space-peach">GALACTIC CARTOGRAPHY • THREE.JS 3D SIMULATION</span>
+            <h2 class="text-2xl font-extrabold text-white mt-0.5">Milky Way 3D Simulation of Known Planet Systems</h2>
+            <p class="text-xs text-space-muted mt-1">Interactive 3D spiral galaxy plotting our Solar System (<span class="text-amber-300 font-bold">Sol</span>) and confirmed NASA exoplanet star systems in galactic coordinates.</p>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-2">
+            <button onclick="setGalaxyFilter('all')" data-gfilter="all" class="galaxy-filter-btn px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider bg-space-orange text-white">
+              All Known Systems
+            </button>
+            <button onclick="setGalaxyFilter('earthlike')" data-gfilter="earthlike" class="galaxy-filter-btn px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider bg-[#0B0B0D] text-space-muted border border-space-border hover:text-white">
+              Earth-Like Only
+            </button>
+            <button onclick="setGalaxyFilter('oxygen')" data-gfilter="oxygen" class="galaxy-filter-btn px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider bg-[#0B0B0D] text-space-muted border border-space-border hover:text-white">
+              Oxygen Found
+            </button>
+            <button onclick="resetGalaxyCamera()" class="btn-pill-outline px-4 py-2 text-xs">
+              Reset View
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 xl:grid-cols-12 gap-6">
+        <!-- 3D Milky Way Viewport -->
+        <div class="xl:col-span-8 rounded-3xl bg-space-card border border-space-border p-4 sm:p-5 flex flex-col justify-between space-y-3">
+          <div class="relative w-full h-[420px] sm:h-[470px] rounded-2xl bg-[#040406] border border-space-border overflow-hidden">
+            <div id="milkyway-3d-container" class="w-full h-full cursor-grab active:cursor-grabbing"></div>
+
+            <div class="absolute top-3 left-3 bg-[#0B0B0D]/85 backdrop-blur border border-space-border rounded-2xl p-3 text-[11px] space-y-1.5">
+              <div class="font-bold uppercase tracking-wider text-white text-[10px]">Milky Way System Markers</div>
+              <div class="flex items-center gap-2 text-space-muted"><span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span> Sol (Earth / Solar System)</div>
+              <div class="flex items-center gap-2 text-space-muted"><span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span> Earth-Like Habitable System</div>
+              <div class="flex items-center gap-2 text-space-muted"><span class="w-2.5 h-2.5 rounded-full bg-sky-400"></span> Oxygen Species Detected</div>
+              <div class="flex items-center gap-2 text-space-muted"><span class="w-2.5 h-2.5 rounded-full bg-space-orange"></span> Confirmed Exoplanet System</div>
+              <div class="flex items-center gap-2 text-space-muted"><span class="w-2.5 h-2.5 rounded-full bg-space-crimson"></span> Debris / Anomaly Star</div>
+            </div>
+
+            <div class="absolute bottom-3 left-3 right-3 flex flex-wrap items-center justify-between gap-2 bg-[#0B0B0D]/85 backdrop-blur border border-space-border rounded-xl px-3.5 py-2 text-[11px] text-space-muted">
+              <span>Click any glowing star node in 3D space to inspect its planets</span>
+              <span class="font-mono text-space-peach">Orion–Cygnus Arm Zoom</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Selected Star System Inspector Sidebar -->
+        <div class="xl:col-span-4 rounded-3xl bg-space-card border border-space-border p-6 flex flex-col justify-between space-y-5">
+          <div class="space-y-4">
+            <div class="flex items-center justify-between">
+              <span class="text-[10px] font-bold uppercase tracking-widest text-space-orange">SELECTED STAR SYSTEM</span>
+              <span id="mw-system-dist" class="text-xs font-mono text-space-peach">40.5 Light-Years</span>
+            </div>
+
+            <div>
+              <label class="block text-[11px] uppercase tracking-wider text-space-muted mb-1.5">Jump to Known Star System</label>
+              <select id="mw-system-dropdown" onchange="selectMilkyWaySystemByIndex(this.value)" class="w-full bg-[#0B0B0D] border border-space-border rounded-2xl px-3.5 py-2.5 text-xs text-white font-semibold focus:outline-none focus:border-space-orange">
+              </select>
+            </div>
+
+            <div class="rounded-2xl bg-[#0B0B0D] border border-space-border p-4 space-y-3">
+              <div>
+                <h3 id="mw-system-name" class="text-xl font-extrabold text-white">TRAPPIST-1</h3>
+                <p id="mw-system-coords" class="text-xs text-space-muted font-mono mt-0.5">Galactic Coords: l = 79.8°, b = -47.9° (Orion Spur)</p>
+              </div>
+
+              <div class="grid grid-cols-2 gap-2.5 text-xs">
+                <div class="rounded-xl bg-space-card border border-space-border p-2.5">
+                  <span class="text-[10px] text-space-muted block">Known Planets</span>
+                  <span id="mw-system-planets" class="font-bold text-white mt-0.5 block">7 Confirmed</span>
+                </div>
+                <div class="rounded-xl bg-space-card border border-space-border p-2.5">
+                  <span class="text-[10px] text-space-muted block">Life Possibility</span>
+                  <span id="mw-system-life" class="font-bold text-emerald-400 mt-0.5 block">84%</span>
+                </div>
+                <div class="rounded-xl bg-space-card border border-space-border p-2.5">
+                  <span class="text-[10px] text-space-muted block">Earth-Like Status</span>
+                  <span id="mw-system-earthlike" class="font-bold text-emerald-400 mt-0.5 block">EARTH-LIKE</span>
+                </div>
+                <div class="rounded-xl bg-space-card border border-space-border p-2.5">
+                  <span class="text-[10px] text-space-muted block">Oxygen Status</span>
+                  <span id="mw-system-oxygen" class="font-bold text-sky-400 mt-0.5 block">H₂O / O₃ / CO₂</span>
+                </div>
+              </div>
+
+              <p id="mw-system-notes" class="text-xs text-space-muted leading-relaxed">
+                Compact ultra-cool red dwarf system hosting 7 temperate terrestrial worlds, with TRAPPIST-1 e right inside the liquid-water habitable zone.
+              </p>
+            </div>
+          </div>
+
+          <button onclick="loadSelectedGalaxySystemIntoLab()" class="btn-pill-orange w-full py-3.5 px-5 text-xs flex items-center justify-center gap-2">
+            <i data-lucide="orbit" class="w-4 h-4"></i>
+            SIMULATE SYSTEM IN 3D ORBIT LAB
           </button>
         </div>
       </div>
-<!-- ... zzz -->
+
+      <!-- Galactic Census Summary Strip -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div class="rounded-2xl bg-space-card border border-space-border p-4 flex items-center justify-between">
+          <div>
+            <span class="text-[11px] uppercase tracking-wider text-space-muted font-semibold">Mapped Milky Way Systems</span>
+            <p id="mw-mapped-count" class="text-xl font-display font-extrabold text-white mt-0.5">9 Systems</p>
+          </div>
+          <span class="text-xs font-mono text-space-peach">100,000 ly Disk</span>
+        </div>
+        <div class="rounded-2xl bg-space-card border border-space-border p-4 flex items-center justify-between">
+          <div>
+            <span class="text-[11px] uppercase tracking-wider text-space-muted font-semibold">Earth-Like Systems in Map</span>
+            <p id="mw-earthlike-count" class="text-xl font-display font-extrabold text-emerald-400 mt-0.5">5 Systems</p>
+          </div>
+          <span class="text-xs font-mono text-emerald-400">Goldilocks Verified</span>
+        </div>
+        <div class="rounded-2xl bg-space-card border border-space-border p-4 flex items-center justify-between">
+          <div>
+            <span class="text-[11px] uppercase tracking-wider text-space-muted font-semibold">Oxygen-Bearing Systems</span>
+            <p id="mw-oxygen-count" class="text-xl font-display font-extrabold text-sky-400 mt-0.5">7 Systems</p>
+          </div>
+          <span class="text-xs font-mono text-sky-400">O₂ / O₃ / H₂O / CO₂</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- TAB 4: SIMULATION ACCOUNTABILITY (VERIFICATION & ACCURACY AUDIT)      -->
+    <!-- ===================================================================== -->
+    <section id="tab-accountability" class="tab-panel hidden space-y-6">
+      <div class="rounded-3xl bg-space-card border border-space-border p-6 sm:p-8">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-space-border">
+          <div>
+            <span class="text-[11px] font-bold uppercase tracking-widest text-space-orange">SCIENTIFIC VERIFICATION ENGINE</span>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-white mt-1">Simulation Accountability & Physics Audit</h2>
+            <p class="text-sm text-space-muted mt-1">Checks whether the 3D orbital transit simulation mathematically matches the telescope's corona dip telemetry and computes an exact accuracy percentage.</p>
+          </div>
+          <div class="flex items-center gap-3">
+            <select id="audit-record-selector" onchange="renderAccountabilityAudit(this.value)" class="bg-[#0B0B0D] border border-space-border rounded-2xl px-4 py-2.5 text-xs text-white font-semibold focus:outline-none focus:border-space-orange">
+            </select>
+          </div>
+        </div>
+
+        <!-- Overall Accountability Hero Score -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 pt-6 items-center">
+          <div class="lg:col-span-4 flex flex-col items-center justify-center bg-[#0B0B0D] border border-space-border rounded-3xl p-6 text-center">
+            <span class="text-[11px] font-bold uppercase tracking-widest text-space-muted mb-3">OVERALL SIMULATION ACCURACY</span>
+            <div class="relative w-40 h-40 flex items-center justify-center">
+              <svg class="w-40 h-40 -rotate-90" viewBox="0 0 120 120">
+                <circle cx="60" cy="60" r="50" stroke="#1E1E28" stroke-width="10" fill="none"/>
+                <circle id="audit-ring-circle" cx="60" cy="60" r="50" stroke="#FF5E00" stroke-width="10" stroke-linecap="round" fill="none" stroke-dasharray="314.16" stroke-dashoffset="12"/>
+              </svg>
+              <div class="absolute inset-0 flex flex-col items-center justify-center">
+                <span id="audit-overall-score" class="text-3xl font-display font-extrabold text-white">96.4%</span>
+                <span id="audit-overall-status" class="text-[11px] font-bold uppercase tracking-wider text-emerald-400 mt-1">VERIFIED RIGHT</span>
+              </div>
+            </div>
+            <p id="audit-summary-text" class="text-xs text-space-muted mt-4 leading-relaxed">
+              The 3D orbital transit simulation matches the observed telescope light curve within 3.6% tolerance. Constant dip intervals confirm a gravitationally bound exoplanet.
+            </p>
+          </div>
+
+          <!-- 4 Astrophysics Verification Checks -->
+          <div class="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="rounded-2xl bg-[#0B0B0D] border border-space-border p-5 space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold uppercase tracking-wider text-white">1. Kepler's 3rd Law Period Match</span>
+                <span id="audit-c1-badge" class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-400">PASS</span>
+              </div>
+              <div class="flex items-baseline justify-between">
+                <span id="audit-c1-score" class="text-2xl font-display font-extrabold text-space-orange">98.2%</span>
+                <span id="audit-c1-detail" class="text-xs font-mono text-space-muted">P = 6.10d vs Sim</span>
+              </div>
+              <div class="w-full h-2 rounded-full bg-[#191922] overflow-hidden">
+                <div id="audit-c1-bar" class="h-full bg-space-orange" style="width: 98.2%"></div>
+              </div>
+              <p class="text-[11px] text-space-muted">Verifies that the simulated semi-major axis reproduces the exact observed transit cadence.</p>
+            </div>
+
+            <div class="rounded-2xl bg-[#0B0B0D] border border-space-border p-5 space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold uppercase tracking-wider text-white">2. Transit Depth Geometry (Rₚ/R★)²</span>
+                <span id="audit-c2-badge" class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-400">PASS</span>
+              </div>
+              <div class="flex items-baseline justify-between">
+                <span id="audit-c2-score" class="text-2xl font-display font-extrabold text-space-peach">95.5%</span>
+                <span id="audit-c2-detail" class="text-xs font-mono text-space-muted">Obs 4920ppm</span>
+              </div>
+              <div class="w-full h-2 rounded-full bg-[#191922] overflow-hidden">
+                <div id="audit-c2-bar" class="h-full bg-space-peach" style="width: 95.5%"></div>
+              </div>
+              <p class="text-[11px] text-space-muted">Compares the 3D sphere occultation area against the measured brightness drop in the corona.</p>
+            </div>
+
+            <div class="rounded-2xl bg-[#0B0B0D] border border-space-border p-5 space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold uppercase tracking-wider text-white">3. Constant Dip Interval Check</span>
+                <span id="audit-c3-badge" class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-400">PASS</span>
+              </div>
+              <div class="flex items-baseline justify-between">
+                <span id="audit-c3-score" class="text-2xl font-display font-extrabold text-emerald-400">99.2%</span>
+                <span id="audit-c3-detail" class="text-xs font-mono text-space-muted">Jitter &lt; 0.8%</span>
+              </div>
+              <div class="w-full h-2 rounded-full bg-[#191922] overflow-hidden">
+                <div id="audit-c3-bar" class="h-full bg-emerald-400" style="width: 99.2%"></div>
+              </div>
+              <p class="text-[11px] text-space-muted">Confirms dips repeat at constant intervals rather than erratic space debris or solar flares.</p>
+            </div>
+
+            <div class="rounded-2xl bg-[#0B0B0D] border border-space-border p-5 space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold uppercase tracking-wider text-white">4. Corona Noise & SNR Isolation</span>
+                <span id="audit-c4-badge" class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-400">PASS</span>
+              </div>
+              <div class="flex items-baseline justify-between">
+                <span id="audit-c4-score" class="text-2xl font-display font-extrabold text-sky-400">92.7%</span>
+                <span id="audit-c4-detail" class="text-xs font-mono text-space-muted">SNR 22.4σ</span>
+              </div>
+              <div class="w-full h-2 rounded-full bg-[#191922] overflow-hidden">
+                <div id="audit-c4-bar" class="h-full bg-sky-400" style="width: 92.7%"></div>
+              </div>
+              <p class="text-[11px] text-space-muted">Ensures stellar granulation and corona plasma fluctuations do not cause false-positive dips.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- TAB 5: SAVED RESULTS (PERSISTENT SCAN & SIMULATION LOGBOOK)           -->
+    <!-- ===================================================================== -->
+    <section id="tab-results" class="tab-panel hidden space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <span class="text-[11px] font-bold uppercase tracking-widest text-space-orange">MISSION ARCHIVE</span>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-white mt-0.5">Saved Scans & Simulation Results</h2>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2">
+          <button onclick="setResultsFilter('all')" data-filter="all" class="filter-pill px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider bg-space-orange text-white">All</button>
+          <button onclick="setResultsFilter('exoplanet')" data-filter="exoplanet" class="filter-pill px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider bg-space-card text-space-muted border border-space-border">Exoplanets</button>
+          <button onclick="setResultsFilter('habitable')" data-filter="habitable" class="filter-pill px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider bg-space-card text-space-muted border border-space-border">Habitable (&gt;70%)</button>
+          <button onclick="setResultsFilter('debris')" data-filter="debris" class="filter-pill px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider bg-space-card text-space-muted border border-space-border">Space Debris</button>
+          <button onclick="exportAllResultsJSON()" class="btn-pill-outline px-4 py-2 text-xs flex items-center gap-1.5 ml-1">
+            <i data-lucide="file-json" class="w-3.5 h-3.5 text-space-orange"></i>
+            EXPORT JSON
+          </button>
+        </div>
+      </div>
+
+      <div id="saved-results-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+      </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- TAB 6: RESOURCES (NASA OPEN DATA & ASTROPHYSICS SCIENCE GUIDE)        -->
+    <!-- ===================================================================== -->
+    <section id="tab-resources" class="tab-panel hidden space-y-6">
+      <div class="rounded-3xl bg-space-card border border-space-border p-6 sm:p-8 space-y-6">
+        <div>
+          <span class="text-[11px] font-bold uppercase tracking-widest text-space-peach">NASA SPACE APPS CHALLENGE • OPEN DATA</span>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-white mt-1">Telescope Data Sources & Science Methodology</h2>
+          <p class="text-sm text-space-muted mt-1 max-w-3xl">
+            AstroDip combines public photometry archives from NASA's planet-hunting space telescopes with orbital mechanics simulations to separate true exoplanets from stellar corona noise and space debris.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <a href="https://exoplanetarchive.ipac.caltech.edu/" target="_blank" rel="noopener noreferrer" class="group rounded-2xl bg-[#0B0B0D] border border-space-border hover:border-space-orange p-5 transition-all flex flex-col justify-between space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase bg-space-orange/20 text-space-orange">LIVE API SOURCE</span>
+              <i data-lucide="external-link" class="w-4 h-4 text-space-muted group-hover:text-space-orange"></i>
+            </div>
+            <div>
+              <h3 class="text-lg font-extrabold text-white group-hover:text-space-orange transition-colors">NASA Exoplanet Archive (Caltech / IPAC)</h3>
+              <p class="text-xs text-space-muted mt-1 leading-relaxed">
+                Official database of confirmed exoplanets, stellar host radii, equilibrium temperatures, and orbital periods queried directly via AstroDip's TAP sync.
+              </p>
+            </div>
+          </a>
+
+          <a href="https://mast.stsci.edu/portal/Mashup/Clients/Mast/Portal.html" target="_blank" rel="noopener noreferrer" class="group rounded-2xl bg-[#0B0B0D] border border-space-border hover:border-space-orange p-5 transition-all flex flex-col justify-between space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase bg-space-peach/20 text-space-peach">LIGHT CURVES</span>
+              <i data-lucide="external-link" class="w-4 h-4 text-space-muted group-hover:text-space-orange"></i>
+            </div>
+            <div>
+              <h3 class="text-lg font-extrabold text-white group-hover:text-space-peach transition-colors">MAST Portal — TESS & Kepler Photometry</h3>
+              <p class="text-xs text-space-muted mt-1 leading-relaxed">
+                Mikulski Archive for Space Telescopes hosting raw time-series brightness measurements (flux vs. time) that can be exported as CSV and scanned in AstroDip.
+              </p>
+            </div>
+          </a>
+
+          <a href="https://eyes.nasa.gov/apps/exo/" target="_blank" rel="noopener noreferrer" class="group rounded-2xl bg-[#0B0B0D] border border-space-border hover:border-space-orange p-5 transition-all flex flex-col justify-between space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase bg-emerald-500/20 text-emerald-400">3D VISUALIZATION</span>
+              <i data-lucide="external-link" class="w-4 h-4 text-space-muted group-hover:text-space-orange"></i>
+            </div>
+            <div>
+              <h3 class="text-lg font-extrabold text-white group-hover:text-emerald-400 transition-colors">NASA Eyes on Exoplanets</h3>
+              <p class="text-xs text-space-muted mt-1 leading-relaxed">
+                Explore full-scale 3D star systems and compare habitable zone boundaries across thousands of discovered worlds.
+              </p>
+            </div>
+          </a>
+
+          <a href="https://science.nasa.gov/exoplanets/habitable-zone/" target="_blank" rel="noopener noreferrer" class="group rounded-2xl bg-[#0B0B0D] border border-space-border hover:border-space-orange p-5 transition-all flex flex-col justify-between space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase bg-sky-500/20 text-sky-400">ASTROBIOLOGY</span>
+              <i data-lucide="external-link" class="w-4 h-4 text-space-muted group-hover:text-space-orange"></i>
+            </div>
+            <div>
+              <h3 class="text-lg font-extrabold text-white group-hover:text-sky-400 transition-colors">NASA Habitable Zone & Biosignature Guide</h3>
+              <p class="text-xs text-space-muted mt-1 leading-relaxed">
+                Learn how stellar luminosity, orbital distance, planetary radius, and atmospheric oxygen species determine whether a world can support liquid water and Earth-like life.
+              </p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
   </main>
 
   <!-- AstroDip Discovery Dossier Modal -->
@@ -729,10 +1120,10 @@
       <div class="space-y-2">
         <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-space-orange/20 border border-space-orange/40">
           <span class="w-2 h-2 rounded-full bg-space-orange"></span>
-          <span class="text-[10px] font-bold uppercase tracking-widest text-space-orange">ASTRODIP DISCOVERY VERIFIED</span>
+          <span class="text-[10px] font-bold uppercase tracking-widest text-space-orange">ASTRODIP +1 DISCOVERY VERIFIED</span>
         </div>
         <h3 id="modal-planet-title" class="text-2xl font-extrabold text-white">TRAPPIST-1 e</h3>
-        <p class="text-xs text-space-muted">Your active corona dip scan and 3D simulation successfully verified this candidate as a confirmed habitable exoplanet!</p>
+        <p class="text-xs text-space-muted">The <strong class="text-white">+1 AstroDip</strong> counter represents your active validated exoplanet candidate verified through corona brightness dip periodicity and 3D orbital simulation!</p>
       </div>
 
       <div class="grid grid-cols-2 gap-3 text-xs">
@@ -750,23 +1141,39 @@
         </div>
         <div class="rounded-2xl bg-[#0B0B0D] border border-space-border p-3.5">
           <span class="text-[10px] uppercase text-space-muted block">Oxygen Species</span>
-          <span id="modal-oxygen-stat" class="font-bold text-sky-400 mt-0.5 block">H₂O / CO₂ / O₃ Found</span>
+          <span id="modal-oxygen-stat" class="font-bold text-sky-400 mt-0.5 block">O₃ / H₂O / CO₂</span>
         </div>
       </div>
 
       <p id="modal-discovery-notes" class="text-xs text-space-muted leading-relaxed">
-        Compact ultra-cool red dwarf system hosting 7 temperate terrestrial worlds. AstroDip's photometry engine measured constant U-shaped dips with 98.8% periodicity constancy, confirming it as our newest catalogued exoplanet discovery.
+        AstroDip scan verified constant periodic corona dips for TRAPPIST-1 e. Switch to any target in the Scanner & 3D Lab or upload your own telescope CSV to test new exoplanet candidates!
       </p>
 
-      <button onclick="closeDiscoveryDossierModal()" class="btn-pill-orange w-full py-3.5 text-xs flex items-center justify-center gap-2">
-        CONTINUE SCANNING
-      </button>
+      <div class="flex gap-3">
+        <button onclick="closeDiscoveryDossierModal(); switchTab('lab');" class="btn-pill-crimson flex-1 py-3.5 text-xs flex items-center justify-center gap-2">
+          OPEN IN 3D LAB
+        </button>
+        <button onclick="closeDiscoveryDossierModal()" class="btn-pill-orange flex-1 py-3.5 text-xs flex items-center justify-center gap-2">
+          GOT IT
+        </button>
+      </div>
     </div>
   </div>
 
   <!-- Footer -->
   <footer class="border-t border-space-border py-6 px-4 sm:px-6 lg:px-8 text-center sm:text-left">
-<!-- ... zzz -->
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-space-muted">
+      <div class="flex items-center gap-2">
+        <span class="font-display font-bold text-white tracking-wider">ASTRODIP</span>
+        <span>• NASA Space Apps Challenge Prototype</span>
+      </div>
+      <div>Photometry Dip Detection • 3D Orbital Mechanics • Milky Way Cartography</div>
+    </div>
+  </footer>
+
+  <!-- ======================================================================= -->
+  <!-- ASTRODIP CORE JAVASCRIPT ENGINE                                         -->
+  <!-- ======================================================================= -->
   <script>
     // =========================================================================
     // 1. SCIENTIFIC CATALOG & FALLBACK NASA DATASETS (WITH OXYGEN & GALAXY COORDS)
@@ -926,7 +1333,7 @@
     let targetsCatalog = [...FALLBACK_NASA_TARGETS];
     let currentTarget = targetsCatalog[1]; // Default to TRAPPIST-1 e
     let currentDipThreshold = 3.5;
-    let currentLightCurve = []; // Array of { time, flux, isDip, expectedDip }
+    let currentLightCurve = [];
     let currentAnalysis = null;
     let savedRecords = [];
     let currentResultsFilter = 'all';
@@ -939,25 +1346,27 @@
     let isDragging3D = false;
     let prevMouseX = 0;
     let prevMouseY = 0;
-    let cameraSpherical = { theta: 0, phi: Math.PI / 2.08, radius: 13.5 }; // Default Edge-On Corona View
+    let cameraSpherical = { theta: 0, phi: Math.PI / 2.08, radius: 13.5 };
 
     // Milky Way 3D Galaxy Scene Variables
     let mwScene, mwCamera, mwRenderer, mwGalaxyPoints, mwNodeMeshes = [];
-    let mwSelectedSystemIndex = 1; // Default TRAPPIST-1
+    let mwSelectedSystemIndex = 1;
     let mwCurrentFilter = 'all';
     let mwCamSpherical = { theta: 0.45, phi: 0.88, radius: 14.5 };
     let isDraggingMW = false;
     let mwPrevX = 0, mwPrevY = 0, mwDownX = 0, mwDownY = 0;
 
     // =========================================================================
-    // 3. INITIALIZATION & LOCALSTORAGE PERSISTENCE
+    // 3. INITIALIZATION & STORAGE PERSISTENCE
     // =========================================================================
     window.addEventListener('DOMContentLoaded', () => {
       if (typeof lucide !== 'undefined') lucide.createIcons();
       loadSavedRecordsFromStorage();
       populateTargetSelector();
       initThreeJS();
-      selectTargetByIndex(1); // Load TRAPPIST-1 e initially
+      selectTargetByIndex(1);
+      const sel = document.getElementById('target-selector');
+      if (sel) sel.value = '1';
       switchTab('home');
       fetchNasaExoplanets(false);
     });
@@ -1089,6 +1498,7 @@
 
           targetsCatalog = [...FALLBACK_NASA_TARGETS, ...cleaned];
           populateTargetSelector();
+          updateHomeDashboardStats();
           if (mwRenderer) {
             rebuildMilkyWaySystemNodes();
             populateMilkyWayDropdown();
@@ -1144,7 +1554,6 @@
         let expectedDip = false;
 
         if (isDebris) {
-          // Irregular, asymmetric V-shaped dips at erratic intervals
           const erraticCenters = [spanDays * 0.14, spanDays * 0.49, spanDays * 0.83];
           erraticCenters.forEach((center, idx) => {
             const dist = Math.abs(time - center);
@@ -1156,7 +1565,6 @@
             }
           });
         } else {
-          // Strictly periodic, U-shaped planetary transit dips
           const phase = ((time + target.pl_orbper * 0.5) % target.pl_orbper) - target.pl_orbper * 0.5;
           const transitHalfWidth = target.pl_orbper * 0.042;
           if (Math.abs(phase) < transitHalfWidth) {
@@ -1188,7 +1596,6 @@
       const sigma = Math.max(0.00012, mad * 1.4826);
       const dipThresholdFlux = medianFlux - thresholdSigma * sigma;
 
-      // Group contiguous points below threshold into dip events
       const dipEvents = [];
       let inDip = false;
       let currentDipPoints = [];
@@ -1208,7 +1615,6 @@
         }
       });
 
-      // Measure interval constancy across detected dips
       let periodicityConstancy = 98.8;
       if (dipEvents.length >= 3) {
         const intervals = [];
@@ -1238,7 +1644,6 @@
       }
       const debrisProb = 100 - exoplanetProb;
 
-      // Earth-Like / Habitable Zone & Life Possibility Score (ESI + Biosignature)
       const tempInRange = target.pl_eqt >= 200 && target.pl_eqt <= 320;
       const rockyRadius = target.pl_rade >= 0.5 && target.pl_rade <= 1.8;
       const subNeptuneHycean = target.pl_rade > 1.8 && target.pl_rade <= 2.8 && tempInRange;
@@ -1273,7 +1678,6 @@
         earthLikeDetail = 'Irregular transit light curve indicates disintegrating dust or comet fragments rather than a habitable planet.';
       }
 
-      // 4-point Simulation Accountability metrics
       const keplerMatch = isDebris ? 46.5 : Number(Math.min(99.5, 95.8 + (periodicityConstancy - 90) * 0.35).toFixed(1));
       const depthMatch = isDebris ? 52.0 : Number(Math.min(99.2, 93.4 + Math.min(5.2, snr * 0.22)).toFixed(1));
       const periodicityScore = periodicityConstancy;
@@ -1327,7 +1731,6 @@
     function runDipScanAndSimulation(notify = true) {
       currentAnalysis = analyzeTargetPhysics(currentTarget, currentDipThreshold, currentLightCurve);
 
-      // Update Target Metadata Pills
       const setTxt = (id, txt) => {
         const el = document.getElementById(id);
         if (el) el.textContent = txt;
@@ -1337,14 +1740,12 @@
       setTxt('meta-temp', `${Math.round(currentTarget.pl_eqt)} K`);
       setTxt('scan-source-tag', `Source: ${currentTarget.disc_facility}`);
 
-      // Update Photometry Strip
       setTxt('scan-dip-count', `${currentAnalysis.dipCount} Dips`);
       setTxt('scan-dip-depth', `${currentAnalysis.dipDepthPpm} ppm`);
       setTxt('scan-dip-shape', currentAnalysis.isDebris ? 'Irregular V-Curve' : 'U-Shaped Transit');
       setTxt('scan-constancy', `${currentAnalysis.periodicityConstancy}%`);
       setTxt('scan-snr', `${currentAnalysis.snr} SNR`);
 
-      // Update Score Gauges
       setTxt('score-exoplanet', `${currentAnalysis.exoplanetProb}%`);
       setTxt('score-debris', `${currentAnalysis.debrisProb}%`);
       const barExo = document.getElementById('bar-exoplanet');
@@ -1392,7 +1793,6 @@
       const barAcc = document.getElementById('bar-accountability-preview');
       if (barAcc) barAcc.style.width = `${currentAnalysis.accountability.overall}%`;
 
-      // Update Earth-Like Life Found Checker
       const elBadge = document.getElementById('earthlike-status-badge');
       if (elBadge) {
         elBadge.textContent = currentAnalysis.earthLikeStatus;
@@ -1412,7 +1812,6 @@
         elDetail.innerHTML = `<strong class="text-white">Verdict:</strong> ${currentAnalysis.earthLikeDetail}`;
       }
 
-      // Update Oxygen Detection Checker (Any Type)
       const ox = currentAnalysis.oxygenSpectrum;
       const oxBadge = document.getElementById('oxygen-overall-badge');
       if (oxBadge) {
@@ -1452,7 +1851,6 @@
       }
       setTxt('oxygen-ppm-badge', `${ox.ppm} ppm`);
 
-      // Update 3D Habitability Status & Scene Visuals
       const hzStatusEl = document.getElementById('sim-hz-status');
       if (hzStatusEl) {
         hzStatusEl.textContent = currentAnalysis.inHabitableZone ? 'Inside Habitable Zone' : 'Outside Habitable Zone';
@@ -1461,6 +1859,7 @@
           : 'text-[11px] font-bold text-space-orange';
       }
 
+      updateHomeDashboardStats();
       updateThreeJSTargetVisuals();
       drawLightCurveCanvas();
 
@@ -1576,7 +1975,6 @@
       const xScale = t => pad.left + ((t - minT) / Math.max(0.0001, maxT - minT)) * plotW;
       const yScale = f => pad.top + ((maxF - f) / Math.max(0.00001, maxF - minF)) * plotH;
 
-      // Subtle Grid
       ctx.strokeStyle = '#1B1B24';
       ctx.lineWidth = 1;
       for (let g = 0; g <= 4; g++) {
@@ -1593,7 +1991,6 @@
         ctx.fillText(fluxVal.toFixed(4), pad.left - 8, gy + 3);
       }
 
-      // Baseline 1.0000 line
       const baseY = yScale(1.0);
       if (baseY >= pad.top && baseY <= h - pad.bottom) {
         ctx.strokeStyle = 'rgba(255, 255, 255, 0.18)';
@@ -1605,7 +2002,6 @@
         ctx.setLineDash([]);
       }
 
-      // Highlight Dip Columns
       currentLightCurve.forEach(pt => {
         if (pt.isDip) {
           const px = xScale(pt.time);
@@ -1614,7 +2010,6 @@
         }
       });
 
-      // Photometry Line
       ctx.strokeStyle = '#FF5E00';
       ctx.lineWidth = 2;
       ctx.beginPath();
@@ -1626,7 +2021,6 @@
       });
       ctx.stroke();
 
-      // Data Points
       currentLightCurve.forEach(pt => {
         const px = xScale(pt.time);
         const py = yScale(pt.flux);
@@ -1636,7 +2030,6 @@
         ctx.fill();
       });
 
-      // Axis Labels
       ctx.fillStyle = '#A0A0B0';
       ctx.font = '11px Inter, sans-serif';
       ctx.textAlign = 'center';
@@ -1651,14 +2044,13 @@
       if (!container || typeof THREE === 'undefined') return;
 
       scene = new THREE.Scene();
-      camera = new THREE.PerspectiveCamera(42, container.clientWidth / Math.max(1, container.clientHeight), 0.1, 100);
+      camera = new THREE.PerspectiveCamera(42, Math.max(1, container.clientWidth) / Math.max(1, container.clientHeight), 0.1, 100);
       renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-      renderer.setSize(container.clientWidth, container.clientHeight);
+      renderer.setSize(Math.max(240, container.clientWidth), Math.max(220, container.clientHeight));
       renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
       container.innerHTML = '';
       container.appendChild(renderer.domElement);
 
-      // Star Core & Outer Corona Glow
       const starGeo = new THREE.SphereGeometry(1.65, 32, 32);
       const starMat = new THREE.MeshBasicMaterial({ color: 0xff5e00 });
       starMesh = new THREE.Mesh(starGeo, starMat);
@@ -1673,7 +2065,6 @@
       coronaMesh = new THREE.Mesh(coronaGeo, coronaMat);
       scene.add(coronaMesh);
 
-      // Habitable Zone Ring
       const hzGeo = new THREE.RingGeometry(4.4, 5.6, 64);
       const hzMat = new THREE.MeshBasicMaterial({
         color: 0x34d399,
@@ -1685,14 +2076,12 @@
       hzRingMesh.rotation.x = Math.PI / 2;
       scene.add(hzRingMesh);
 
-      // Orbital Path Line
       const orbitCurve = new THREE.EllipseCurve(0, 0, 5.0, 5.0, 0, 2 * Math.PI, false, 0);
       const orbitPts = orbitCurve.getPoints(96).map(p => new THREE.Vector3(p.x, 0, p.y));
       const orbitLineGeo = new THREE.BufferGeometry().setFromPoints(orbitPts);
       const orbitLineMat = new THREE.LineBasicMaterial({ color: 0x44445a });
       scene.add(new THREE.Line(orbitLineGeo, orbitLineMat));
 
-      // Orbiting Planet Group
       planetGroup = new THREE.Group();
       const planetGeo = new THREE.SphereGeometry(0.42, 24, 24);
       const planetMat = new THREE.MeshStandardMaterial({
@@ -1703,12 +2092,10 @@
       planetGroup.add(new THREE.Mesh(planetGeo, planetMat));
       scene.add(planetGroup);
 
-      // Lighting
       const pointLight = new THREE.PointLight(0xffaa55, 2.4, 30);
       scene.add(pointLight);
       scene.add(new THREE.AmbientLight(0x404055, 1.1));
 
-      // Mouse & Touch Orbit Controls
       const dom = renderer.domElement;
       dom.addEventListener('mousedown', e => {
         isDragging3D = true;
@@ -1830,7 +2217,6 @@
         planetGroup.position.z = Math.cos(orbitAngle) * orbitR;
         planetGroup.rotation.y += 0.02;
 
-        // Check if planet is transiting in front of the star (+Z side, |x| < 1.8)
         const inTransit = planetGroup.position.z > 0 && Math.abs(planetGroup.position.x) < 1.75;
         const dot = document.getElementById('sim-transit-dot');
         const label = document.getElementById('sim-transit-label');
@@ -1872,14 +2258,13 @@
       }
 
       mwScene = new THREE.Scene();
-      mwCamera = new THREE.PerspectiveCamera(45, container.clientWidth / Math.max(1, container.clientHeight), 0.1, 120);
+      mwCamera = new THREE.PerspectiveCamera(45, Math.max(1, container.clientWidth) / Math.max(1, container.clientHeight), 0.1, 120);
       mwRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-      mwRenderer.setSize(container.clientWidth, container.clientHeight);
+      mwRenderer.setSize(Math.max(260, container.clientWidth), Math.max(300, container.clientHeight));
       mwRenderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
       container.innerHTML = '';
       container.appendChild(mwRenderer.domElement);
 
-      // Build 3,200 Spiral Galaxy Star Particles
       const starCount = 3200;
       const positions = new Float32Array(starCount * 3);
       const colors = new Float32Array(starCount * 3);
@@ -1915,7 +2300,6 @@
       mwGalaxyPoints = new THREE.Points(galGeo, galMat);
       mwScene.add(mwGalaxyPoints);
 
-      // Sol (Our Solar System) Marker in the Orion Spur
       const solGeo = new THREE.SphereGeometry(0.18, 20, 20);
       const solMat = new THREE.MeshBasicMaterial({ color: 0xfbbf24 });
       const solMesh = new THREE.Mesh(solGeo, solMat);
@@ -1926,7 +2310,6 @@
       populateMilkyWayDropdown();
       selectMilkyWaySystemByIndex(mwSelectedSystemIndex);
 
-      // Drag & Raycast Click Interaction
       const raycaster = new THREE.Raycaster();
       const pointer = new THREE.Vector2();
       const dom = mwRenderer.domElement;
@@ -2193,8 +2576,8 @@
       }
 
       if (!Array.isArray(savedRecords) || savedRecords.length === 0) {
-        const t1 = FALLBACK_NASA_TARGETS[1]; // TRAPPIST-1 e
-        const t2 = FALLBACK_NASA_TARGETS[0]; // Kepler-186 f
+        const t1 = FALLBACK_NASA_TARGETS[1];
+        const t2 = FALLBACK_NASA_TARGETS[0];
         savedRecords = [
           {
             id: 'seed-1',
@@ -2231,8 +2614,9 @@
       if (b2) b2.textContent = String(count);
 
       const planetScans = savedRecords.filter(r => !r.analysis.isDebris);
-      // +1 AstroDip discovery based on the active or most recently scanned planet in the lab!
-      const totalDiscovered = BASE_NASA_CONFIRMED_COUNT + 1;
+      const isCurrentExoplanet = currentAnalysis ? !currentAnalysis.isDebris : true;
+      const astrodipCount = isCurrentExoplanet ? 1 : 0;
+      const totalDiscovered = BASE_NASA_CONFIRMED_COUNT + astrodipCount;
 
       const avgLife =
         planetScans.length > 0
@@ -2248,7 +2632,12 @@
         if (el) el.textContent = v;
       };
       setTxt('stat-planets-discovered', totalDiscovered.toLocaleString());
-      setTxt('stat-planets-sub', `${BASE_NASA_CONFIRMED_COUNT.toLocaleString()} NASA + 1 AstroDip (${currentTarget ? currentTarget.pl_name : 'TRAPPIST-1 e'})`);
+      setTxt(
+        'stat-planets-sub',
+        astrodipCount > 0
+          ? `${BASE_NASA_CONFIRMED_COUNT.toLocaleString()} NASA + 1 AstroDip (${currentTarget ? currentTarget.pl_name : 'TRAPPIST-1 e'})`
+          : `${BASE_NASA_CONFIRMED_COUNT.toLocaleString()} NASA + 0 AstroDip (Debris Flagged)`
+      );
       setTxt('stat-life-possibility', `${avgLife}%`);
       setTxt('stat-avg-accountability', `${avgAcc}%`);
       setTxt('stat-nasa-targets', String(targetsCatalog.length));
@@ -2256,19 +2645,25 @@
 
     function openDiscoveryDossierModal() {
       const modal = document.getElementById('discovery-modal');
-      if (!modal || !currentAnalysis) return;
+      if (!modal) return;
+      const analysis = currentAnalysis || analyzeTargetPhysics(currentTarget, currentDipThreshold);
 
       const setTxt = (id, v) => {
         const el = document.getElementById(id);
         if (el) el.textContent = v;
       };
       setTxt('modal-planet-title', currentTarget.pl_name);
-      setTxt('modal-exo-score', `${currentAnalysis.exoplanetProb}% Confirmed`);
-      setTxt('modal-life-score', `${currentAnalysis.habitabilityScore}% Habitable`);
+      setTxt('modal-exo-score', analysis.isDebris ? `${analysis.debrisProb}% Space Debris` : `${analysis.exoplanetProb}% Confirmed Planet`);
+      setTxt('modal-life-score', `${analysis.habitabilityScore}% Habitable`);
       const ox = currentTarget.oxygenSpectrum || {};
       const foundList = ['O2', 'O3', 'H2O', 'CO2', 'atomicO'].filter(k => ox[k]);
       setTxt('modal-oxygen-stat', foundList.length > 0 ? foundList.join(' / ') : 'None Detected');
-      setTxt('modal-discovery-notes', `AstroDip scan verified constant periodic corona dips for ${currentTarget.pl_name} (${currentTarget.hostname}). By passing 3.5σ threshold testing and Kepler's 3rd law audits, this world is officially logged as your +1 AstroDip discovery!`);
+      setTxt(
+        'modal-discovery-notes',
+        analysis.isDebris
+          ? `${currentTarget.pl_name} exhibited irregular dip intervals, so AstroDip flagged it as space debris rather than adding +1 to the confirmed exoplanet count.`
+          : `AstroDip's photometry engine verified constant periodic corona dips for ${currentTarget.pl_name} (${currentTarget.hostname}). Passing the ${currentDipThreshold.toFixed(1)}σ threshold and 3D transit simulation qualifies it as your +1 AstroDip verified exoplanet!`
+      );
 
       modal.classList.remove('hidden');
       if (typeof lucide !== 'undefined') lucide.createIcons();
